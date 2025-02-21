@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>visitor</title>
+  </head>
+  <body>
+    <form id="visitorForm">
+      <div id="visitorContainer">
+        <input type="number" name="userID" placeholder="유저id 등록" />
+        <input type="text" name="userName" placeholder="사용자 이름" />
+        <input type="text" name="userText" placeholder="방명록" />
+        <button type="button" onclick="createData()">등록</button>
+      </div>
+      <br />
+      <div id="optionsContainer">
+        <table border="1" cellspacing="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>작성자</th>
+              <th>방명록</th>
+              <th>수정</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let i = 0; i < visitor.length; i++) { %>
+            <tr id="tr_<%=visitor[i].id %>">
+              <td><%= visitor[i].id %></td>
+              <td>
+                <a href="/visitor/detail/<%= visitor[i].id %>"
+                  ><%= visitor[i].name %></a
+                >
+              </td>
+              <td><%= visitor[i].comment %></td>
+              <td>
+                <button
+                  type="'button"
+                  onclick="updatePage('<%= visitor[i].id%>')"
+                >
+                  수정
+                </button>
+              </td>
+              <td>
+                <button
+                  type="'button"
+                  onclick="deleteVisitor('<%= visitor[i].id%>')"
+                >
+                  삭제
+                </button>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </body>
+  <script>
+    const createData = () => {
+      const form = document.getElementById("visitorForm").elements;
+
+      const userID = form["userID"].value;
+      const userName = form["userName"].value;
+      const userText = form["userText"].value;
+
+      const data = { userid: userID, name: userName, comment: userText };
+
+      axios({
+        method: "post",
+        url: "/visitor/test/create",
+        data: data,
+      })
+        .then((response) => {
+          alert("등록성공");
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    const deleteVisitor = (id) => {
+      // console.log(id);
+      // return;
+      axios({
+        method: "delete",
+        url: `/visitor/delete/${id}`,
+      })
+        .then((response) => {
+          alert("삭제성공");
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    const updatePage = (id) => {
+      window.location.href = `/visitor/write/${id}`;
+    };
+  </script>
+</html>
