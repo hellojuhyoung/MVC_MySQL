@@ -84,8 +84,6 @@
     };
 
     const deleteVisitor = (id) => {
-      // console.log(id);
-      // return;
       axios({
         method: "delete",
         url: `/visitor/delete/${id}`,
@@ -100,6 +98,7 @@
     };
 
     const updatePage = (id) => {
+      event.preventDefault();
       window.location.href = `/visitor/write/${id}`;
     };
   </script>

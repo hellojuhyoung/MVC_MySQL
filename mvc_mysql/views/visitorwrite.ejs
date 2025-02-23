@@ -30,8 +30,6 @@
     const updateForm = (id) => {
       const form = document.forms["updateData"];
 
-      //   console.log(form["name"].value);
-
       const data = {
         id: id,
         name: form["name"].value,
@@ -47,7 +45,9 @@
           alert("수정성공!");
           window.location.href = "/visitor";
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log(error);
+        });
     };
   </script>
 </html>

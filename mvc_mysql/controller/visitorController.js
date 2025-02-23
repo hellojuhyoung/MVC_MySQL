@@ -25,11 +25,6 @@ const deleteData = async (req, res) => {
 };
 
 //수정 페이지 이동
-// const moveWrite = (req, res) => {
-//   res.render("visitorwrite");
-//   console.log(req.params, "moveWrite");
-// };
-
 const moveWrite = async (req, res) => {
   const editVisitor = await visitorModel.getOne(req.params.id);
   res.render("visitorwrite", { editVisitor });
