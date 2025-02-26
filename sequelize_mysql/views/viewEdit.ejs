@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit</title>
+  </head>
+  <body>
+    <!-- editUser -->
+    <form name="editForm">
+      <div>
+        이름
+        <input name="name" value="<%= editUser.dataValues.name %>" />
+      </div>
+      <br />
+      <div>
+        방명록
+        <input name="comment" value="<%= editUser.dataValues.comment %>" />
+      </div>
+      <br />
+      <div>
+        <button
+          type="button"
+          onclick="updateUser('<%= editUser.dataValues.id%>')"
+        >
+          수정
+        </button>
+      </div>
+    </form>
+  </body>
+  <script>
+    const updateUser = (id) => {
+      const form = document.forms["editForm"];
+
+      const data = {
+        id: id,
+        name: form["name"].value,
+        comment: form["comment"].value,
+      };
+
+      axios({
+        method: "put",
+        url: "/user/update",
+        data: data,
+      })
+        .then((response) => {
+          alert("수정성공!");
+          window.location.href = "/";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+  </script>
+</html>
